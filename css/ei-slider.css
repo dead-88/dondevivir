@@ -1,0 +1,211 @@
+.ei-slider{
+    position: relative;
+    width: 100%;
+    max-width: 1920px;
+    height: 300px;
+    margin: 0 auto;
+}
+.ei-slider-loading{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index:999;
+    background: rgba(0,0,0,0.9);
+    color: #fff;
+    text-align: center;
+    line-height: 400px;
+}
+.ei-slider-large{
+    height: 100%;
+    width: 100%;
+    position:relative;
+
+}
+.ei-slider-large li{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    overflow: hidden;
+    height: 100%;
+    width: 100%;
+}
+.ei-slider-large li img{
+    width: 100%;
+}
+.ei-title{
+    position: absolute;
+    right: 64%;
+    top: 17%;
+}
+.ei-title h2, .ei-title h3{
+    text-align: center;
+}
+.ei-title h2{
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 28px;
+    color: white;
+    margin-bottom: 20px;
+    text-align: left;
+}
+.ei-title h2 b {
+    font-size: 18px;
+    font-weight: 300;
+    background-image: url("../../../Images/Slider/FlechaSlider.png");
+    background-position: left bottom;
+    padding-left: 37px;
+    padding-bottom: 24px;
+    background-repeat: no-repeat;
+    margin-left: -30px;
+
+}
+.ei-title h3{
+    font-size: 32px;
+    line-height: 35px;
+    font-weight: 900;
+    color: white;
+    text-align: left;
+    margin-bottom: 25px;
+}
+.ei-title h3 b {
+    font-size: 18px;
+    font-weight: 300;
+}
+.ei-title h4{
+    font-size: 18px;
+    line-height: 25px;
+    opacity:1 !important;
+    color:white;
+    text-align:center;
+}
+.ei-title h5{
+    font-size: 18px;
+    line-height: 25px;
+    opacity:1 !important;
+    color:white;
+    text-align:center;
+    font-style:italic;
+    font-weight:bolder;
+}
+
+.ei-title h2.Negro{
+
+    color: black;
+
+}
+.ei-title h3.Negro{
+
+    color: black;
+
+}
+.ei-title h4.Negro{
+
+    color:black;
+
+}
+.ei-title h5.Negro{
+    color:black;
+}
+.ei-slider-thumbs{
+    height: 13px;
+    margin: 0 auto;
+    position: relative;
+
+    max-width: 163px !important;
+}
+.ei-slider-thumbs li{
+    position: relative;
+    float: left;
+    height: 100%;
+    max-width: 25px !important;
+}
+.ei-slider-thumbs li.ei-slider-element{
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    height: 18px;
+    z-index: 10;
+    text-indent: -9000px;
+    background-image: url(".././../../Images/Bullets.png");
+    background-position: 2px 0px;
+    background-repeat:no-repeat;
+}
+.ei-slider-thumbs li a{
+    display: block;
+    text-indent: -9000px;
+    background-image:url("../../../Images/Bullets.png");
+    width: 10px;
+    height: 15px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    background-position: 0px -21px;
+    margin: 0 auto;
+
+}
+
+.ei-slider-thumbs li img{
+    position: absolute;
+    bottom: 50px;
+    opacity: 0;
+    z-index: 999;
+    max-width: 100%;
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    -ms-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    -webkit-box-reflect:
+            below 0px -webkit-gradient(
+                    linear,
+                    left top,
+                    left bottom,
+                    from(transparent),
+                    color-stop(50%, transparent),
+                    to(rgba(255,255,255,0.3))
+            );
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+}
+.ei-slider-thumbs li:hover img{
+    opacity: 1;
+    bottom: 13px;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+}
+@media screen and (max-width: 830px) {
+    .ei-title{
+        position: absolute;
+        right: 0px;
+        margin-right: 0px;
+        width: 100%;
+        text-align: center;
+        top: auto;
+        bottom: 0px;
+        background: #efefef;
+        background: rgba(71,71,71,0.9);
+        padding: 5px 0;
+    }
+    .ei-title h2, .ei-title h3{
+        text-align: center;
+        color:white !important;
+    }
+    .ei-title h2{
+        font-size: 25px;
+        line-height: 24px;
+        margin-bottom:10px;
+        color:white !important;
+    }
+    .ei-title h3{
+        font-size: 15px;
+        line-height: 25px;
+        color:white !important;
+    }
+    .ei-title h4{
+
+        color:white !important;
+    }
+    .ei-title h5{
+
+        color:white !important;
+    }
+}

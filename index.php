@@ -1,3 +1,8 @@
+<?php
+require_once 'models/class.conection.php';
+session_start();
+?>
+
 <!doctype html>
 <html lang="es">
 <head>
@@ -10,6 +15,7 @@
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/ei-slider.css">
+    <link rel="stylesheet" href="fonts/flaticon.css">
 </head>
 <body>
     <header>
@@ -27,8 +33,15 @@
                                 </a>
                             </li>
                             <li><a href="#">INMOBILIARIA</a></li>
-                            <li><a href="#">CONSTRUCTORAS</a></li>
-                            <li><a href="#" data-toggle="modal" data-target="#reg">REGISTRATE</a></li>
+                            <?php
+                                if(!isset($_SESSION['users'])){
+                                    echo '<li><a href="#" data-toggle="modal" data-target="#reg">REGISTRATE</a></li>';
+                                    echo '<li><a href="#" data-toggle="modal" data-target="#reginm">SIGN IN</a></li>';
+                                }else{
+                                    echo '<li><a href="controllers/close.php">SIGN OUT</a></li>';
+
+                                }
+                            ?>
                         </ul>
                         <ul class="submenu menubottom">
                             <li><a href="#">BUSCAR CASA</a></li>
@@ -54,18 +67,86 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
+                <h4 class="modal-title">Registrate Es Completamente gratis.</h4>
             </div>
             <div class="modal-body">
-                <p>Some text in the modal.</p>
+                <p class="text-center">Disfruta de DondeVivir.com tú inmobiliaria.</p>
+                <h3 class="text-center text-danger text-capitalize">Registrarme</h3>
+                <span id="_AJAX_REG_"></span>
+                <div role="form" class="main" onkeypress="return EnterRunReg(event)">
+                    <div class="input-group">
+                        <span class="input-group-addon">Nombre</span>
+                        <input type="text" id="name" class="form-control" placeholder="Ingresa su nombre completo" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">N° Cedúla</span>
+                        <input type="number" id="cedula" maxlength="10" minlength="10" class="form-control" placeholder="C.C" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">N° Teléfono</span>
+                        <input type="number" id="telf" maxlength="10" minlength="10" class="form-control" placeholder="Ej: +57 246257" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">N° Celular</span>
+                        <input type="number" id="cel" maxlength="10" minlength="10" class="form-control" placeholder="Ej: +57 3001234567" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">E-Mail <span class="glyphicon glyphicon-envelope"></span></span>
+                        <input pattern="^[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+@[-!#$%&\'*+\\/0-9=?A-Z^_`a-z{|}~]+\.[-!#$%&\'*+\\./0-9=?A-Z^_`a-z{|}~]+$" type="email" id="email" maxlength="30" minlength="10" class="form-control" placeholder="Example@ej.com" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <label><input type="checkbox" id="tyc" value="1" checked> Acepto los T&C</label>
+                    </div>
+                    <br>
+                    <center>
+                        <div class="input-group">
+                            <button type="button" onclick="RegUser()" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Registrarme</button>
+                        </div>
+                    </center>
+                    <p class="text-right text-info"><a href="#" data-target="#reginm" data-toggle="modal">Ya estoy registrado!</a></p>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
-
     </div>
 </div>
+
+    <!-- Modal -->
+    <div id="reginm" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Acceder a la inmobiliaria.</h4>
+                </div>
+                <div class="modal-body">
+                    <h3 class="text-center text-info">Ingresar a DondeVivir.com</h3>
+                    <span id="_AJAX_USER_"></span>
+                    <div class="main" role="form" onkeypress="return EnterKeyboard(event)">
+                        <div class="input-group">
+                            <span class="input-group-addon">Login</span>
+                            <input type="text" id="login" class="form-control" placeholder="Ingresa tú cedula o email">
+                        </div>
+                        <br>
+                        <center>
+                            <div class="input-group">
+                                <button type="button" onclick="acces()" class="btn btn-success">Sing In</button>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <section id="slider" class="sect">
         <ul class="slider-wrapper">
@@ -92,7 +173,10 @@
         <ul id="control-buttons" class="control-buttons"></ul>
     </section>
 
-    <section class="wrapper main clearfix">
+    <?php
+        if(!isset($_SESSION['users'])){
+            echo '
+                <section class="wrapper main clearfix">
         <div class="columnRight">
             <a href="#" target="_blank">
                 <img src="http://homelos.com/wp-content/uploads/2016/08/modest-for-bathroom-design-trends-in-style-and-hd-image-v1fl.jpg" alt="Read error">
@@ -220,9 +304,55 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
+                ';
+        }else{
+            echo '
+                <div class="wrapper">
+                    <span id="_AJAX_REG_"></span>
+                <div role="form" class="main" onkeypress="return EnterRunReg(event)">
+                    <div class="input-group">
+                        <span class="input-group-addon">Nombre</span>
+                        <input type="text" id="name" class="form-control" placeholder="Ingresa su nombre completo" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">N° Cedúla</span>
+                        <input type="number" id="cedula" maxlength="10" minlength="10" class="form-control" placeholder="C.C" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">N° Teléfono</span>
+                        <input type="number" id="telf" maxlength="10" minlength="10" class="form-control" placeholder="Ej: +57 246257" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">N° Celular</span>
+                        <input type="number" id="cel" maxlength="10" minlength="10" class="form-control" placeholder="Ej: +57 3001234567" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">E-Mail <span class="glyphicon glyphicon-envelope"></span></span>
+                        <input type="email" id="email" maxlength="30" minlength="10" class="form-control" placeholder="Example@ej.com" required>
+                    </div >
+                    <br >
+                    <div class="input-group" >
+                        <label ><input type = "checkbox" id = "tyc" value = "1" checked >Acepto los T & C </label >
+                    </div >
+                    <br >
+                    <center >
+                        <div class="input-group" >
+                            <button type = "button" onclick = "RegUser()" class="btn btn-default btn-success btn-block" ><span class="glyphicon glyphicon-off" ></span > Registrarme</button >
+                        </div >
+                    </center >
+                </div >
+                </div>
+            ';
+        }
+    ?>
+
+
 
     <footer>
         <div class="wrapper">
@@ -246,6 +376,8 @@
     </footer>
 <script src="js/jquery-1.12.4.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/index.js"></script>
+    <script src="js/slider.js"></script>
+    <script src="js/reg.js"></script>
+    <script src="js/ing.js"></script>
 </body>
 </html>

@@ -5,16 +5,16 @@
     try{
         $modelo = new Conection();
         $connect = $modelo->get_conection();
-        $query = "SELECT cedula,email FROM usuarios WHERE  email = :login && pass = :pass LIMIT 1;";
+        $query = "SELECT email,pass FROM usuarios WHERE  email = :login AND pass = :password LIMIT 1;";
         $stm = $connect->prepare($query);
         $login = htmlentities(addslashes($_POST['login']));
-        $pass = htmlentities(addslashes($_POST['pass']));
+        $pass = htmlentities(addslashes($_POST['password']));
         $encrypt = sha1($pass);
         $stm->bindValue(':login',$login);
-        $stm->bindValue(':pass',$encrypt);
+        $stm->bindValue(':password',$encrypt);
         $stm->execute();
         $rows = $stm->rowCount();
-        if($rows == 1){
+        if($rows != 0){
             session_start();
             $_SESSION['users'] = $_POST['login'];
             echo 1;

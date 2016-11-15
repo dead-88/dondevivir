@@ -148,7 +148,7 @@ session_start();
                         <br>
                         <div class="input-group">
                             <span class="input-group-addon">Password</span>
-                            <input type="password" id="pass" class="form-control" placeholder="Ingresa tú contraseña">
+                            <input type="password" id="password" class="form-control" placeholder="Ingresa tú contraseña">
                         </div>
                         <br>
                         <center>

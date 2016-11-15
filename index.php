@@ -21,7 +21,7 @@ session_start();
     <header>
         <div class="wrapper">
             <a href="index.php">
-                <img src="http://casasbaratasencuenca.com/wp-content/uploads/2014/04/casas.png" id="logo" alt="Donde vivir cucúta">
+                <img src="img/img-topic--asset-management-2_560_360_s_c1.png" id="logo" alt="Donde vivir cucúta">
             </a>
             <div class="headerContent">
                 <div class="buscadorMenu">
@@ -75,7 +75,7 @@ session_start();
                 <span id="_AJAX_REG_"></span>
                 <div role="form" class="main" onkeypress="return EnterRunReg(event)">
                     <div class="input-group">
-                        <span class="input-group-addon">Nombre</span>
+                        <span class="input-group-addon">Nombre:</span>
                         <input type="text" id="name" class="form-control" placeholder="Ingresa su nombre completo" required>
                     </div>
                     <br>
@@ -100,6 +100,16 @@ session_start();
                     </div>
                     <br>
                     <div class="input-group">
+                        <span class="input-group-addon">Contraseña</span>
+                        <input type="password" id="pass" class="form-control" placeholder="Ingresa aquí tu contraseña" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Repite tú contraseña</span>
+                        <input type="password" id="r_pass" class="form-control" placeholder="Ingresa aquí tu contraseña nuevamente" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
                         <label><input type="checkbox" id="tyc" value="1" checked> Acepto los T&C</label>
                     </div>
                     <br>
@@ -117,9 +127,8 @@ session_start();
         </div>
     </div>
 </div>
-
-    <!-- Modal -->
-    <div id="reginm" class="modal fade" role="dialog">
+<!-- Modal -->
+<div id="reginm" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -135,6 +144,11 @@ session_start();
                         <div class="input-group">
                             <span class="input-group-addon">Login</span>
                             <input type="text" id="login" class="form-control" placeholder="Ingresa tú cedula o email">
+                        </div>
+                        <br>
+                        <div class="input-group">
+                            <span class="input-group-addon">Password</span>
+                            <input type="password" id="pass" class="form-control" placeholder="Ingresa tú contraseña">
                         </div>
                         <br>
                         <center>
@@ -158,7 +172,21 @@ session_start();
                 </div>
             </li>
             <li>
-                <img src="img/Slide_02.jpg" alt="Donde vivir">
+                <img src="img/61640-helen-yates-029.jpg" alt="Donde vivir">
+                <div class="caption">
+                    <h2 class="slider-title">Donde Vivir Colombía</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias beatae dolor enim et exercitationem fugiat, libero, non pariatur quas quos suscipit totam voluptas! Adipisci nam nulla quia sapiente sed.</p>
+                </div>
+            </li>
+            <li>
+                <img src="img/img.jpg" alt="Donde vivir">
+                <div class="caption">
+                    <h2 class="slider-title">Donde Vivir Colombía</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias beatae dolor enim et exercitationem fugiat, libero, non pariatur quas quos suscipit totam voluptas! Adipisci nam nulla quia sapiente sed.</p>
+                </div>
+            </li>
+            <li>
+                <img src="img/68929-ison-160217-westdean-53280.jpg" alt="Donde vivir">
                 <div class="caption">
                     <h2 class="slider-title">Donde Vivir Colombía</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A alias beatae dolor enim et exercitationem fugiat, libero, non pariatur quas quos suscipit totam voluptas! Adipisci nam nulla quia sapiente sed.</p>

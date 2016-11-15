@@ -1,9 +1,10 @@
 function acces() {
-    var connect,form,result,login;
+    var connect,form,result,login,pass;
     login = document.getElementById('login').value;
+    pass = document.getElementById('pass').value;
 
-    if(login != ''){
-        form = 'login=' + login;
+    if(login != '' && pass != ''){
+        form = 'login=' + login + '&pass=' + pass;
         connect = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         connect.onreadystatechange = function () {
             if(connect.readyState == 4 && connect.status == 200){

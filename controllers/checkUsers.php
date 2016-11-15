@@ -5,10 +5,13 @@
     try{
         $modelo = new Conection();
         $connect = $modelo->get_conection();
-        $query = "SELECT cedula,email FROM usuarios WHERE  email = :login LIMIT 1;";
+        $query = "SELECT cedula,email FROM usuarios WHERE  email = :login && pass = :pass LIMIT 1;";
         $stm = $connect->prepare($query);
         $login = htmlentities(addslashes($_POST['login']));
+        $pass = htmlentities(addslashes($_POST['pass']));
+        $encrypt = sha1($pass);
         $stm->bindValue(':login',$login);
+        $stm->bindValue(':pass',$encrypt);
         $stm->execute();
         $rows = $stm->rowCount();
         if($rows == 1){

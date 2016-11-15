@@ -5,12 +5,14 @@
 
     $modelo = new Conection();
     $connect = $modelo->get_conection();
-    $query = "SELECT * FROM usuarios WHERE (cedula = :cedula OR email = :email) LIMIT 1;";
+    $query = "SELECT * FROM usuarios WHERE (cedula = :cedula OR email = :email) && pass = :pass LIMIT 1;";
     $stm = $connect->prepare($query);
     $cedula = htmlentities(addslashes($_POST['cedula']));
     $email = htmlentities(addslashes($_POST['email']));
+    $pass = htmlentities(addslashes($_POST['pass']));
     $stm->bindValue(':cedula',$cedula);
     $stm->bindValue(':email',$email);
+    $stm->bindValue(':pass',$pass);
     $stm->execute();
     $rows = $stm->rowCount();
     if($rows == 0){
@@ -18,8 +20,9 @@
         $name = htmlentities(addslashes($_POST['name']));
         $telefono = htmlentities(addslashes($_POST['telf']));
         $celular = htmlentities(addslashes($_POST['cel']));
+        $encrypt = sha1($pass);
         $modelo = new Consultations();
-        $result = $modelo->insert_users($name,$cedula,$telefono,$celular,$email);
+        $result = $modelo->insert_users($name,$cedula,$telefono,$celular,$email,$encrypt);
         $HTML = 1;
     }else{
         $HTML = '<div class="alert alert-dismissible alert-danger">

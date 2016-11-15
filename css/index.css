@@ -55,10 +55,9 @@ header .wrapper{
 #logo{
     float: left;
     margin-bottom: -35px;
-}
-
-#logo:hover{
-    opacity: 0.9;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
 }
 
 img#logo{
@@ -244,16 +243,19 @@ ol, ul{
 }
 
 .slider-wrapper h2{
-    color: #00c5b9;
+    color: rgba(121, 237, 232, 0.78);
     font-size: 2em;
     font-weight: 400;
     margin-bottom: 6px;
+    text-align: center;
 }
 
 .slider-wrapper p{
     font-size: 1.6em;
     font-weight: 300;
     line-height: 1.4em;
+    font-family: Verdana, Arial, sans-serif;
+    text-align: center;
 }
 
 /**
@@ -299,6 +301,9 @@ ol, ul{
     width: 250px;
     height: 600px;
     background-size: cover;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
 }
 
 .columnLeft{
@@ -360,6 +365,7 @@ ol, ul{
 .fotoItem a img{
     max-width: 150px;
     max-height: 100px;
+    height: 100px;
 }
 
 .DetallesItem{

@@ -1,6 +1,23 @@
 <?php
 require_once 'models/class.conection.php';
+require_once 'models/class.consultations.php';
 session_start();
+
+
+if(!isset($_SESSION['users']))
+{
+    echo '<div class="alert alert-dismissible alert-info">
+           <button type="button" class="close" data-dismiss="alert">x</button>
+           <strong>Inicia sesión: <a href="https://www.hotmail.com" target="_blank" data-toggle="modal" data-target="#reginm">aquí</a> </strong> para poder publicar inmuebles.
+          </div>';
+}else{
+    $modelo = new Conection();
+    $connect = $modelo->get_conection();
+    $stm = $connect->prepare("SELECT * FROM usuarios WHERE id = :uid");
+    $stm->execute(array(":uid"=>$_SESSION['users']));
+    $row = $stm->fetch(PDO::FETCH_ASSOC);
+}
+
 ?>
 
 <!doctype html>
@@ -39,7 +56,6 @@ session_start();
                                     echo '<li><a href="#" data-toggle="modal" data-target="#reginm">SIGN IN</a></li>';
                                 }else{
                                     echo '<li><a href="controllers/close.php">SIGN OUT</a></li>';
-
                                 }
                             ?>
                         </ul>
@@ -59,7 +75,7 @@ session_start();
             </div>
         </div>
     </header>
-<!-- Modal -->
+<!-- Modal Registro-->
 <div id="reg" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -127,7 +143,7 @@ session_start();
         </div>
     </div>
 </div>
-<!-- Modal -->
+<!-- Modal Login-->
 <div id="reginm" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
@@ -337,42 +353,35 @@ session_start();
                 ';
         }else{
             echo '
-                <div class="wrapper">
-                    <span id="_AJAX_REG_"></span>
-                <div role="form" class="main" onkeypress="return EnterRunReg(event)">
+                <div class="wrapper container">
+                <h3 class="text-center text-success">Hola '.$row['nombre'].'</h3>
+                <div role="form" onkeypress="return keyPress(event)">
+                <h2 class="text-center">¿Qué días estás disponible?</h2>
                     <div class="input-group">
-                        <span class="input-group-addon">Nombre</span>
-                        <input type="text" id="name" class="form-control" placeholder="Ingresa su nombre completo" required>
+                        <span class="input-group-addon">De que horas a qué hora?</span>
+                        <input type="text" id="inicio" class="form-control" placeholder="Ej: 10 am." required>
+                        <center><b class="text-info">A</b></center>
+                        <input type="text" id="fin" class="form-control" placeholder="5 pm." required>
                     </div>
                     <br>
                     <div class="input-group">
-                        <span class="input-group-addon">N° Cedúla</span>
-                        <input type="number" id="cedula" maxlength="10" minlength="10" class="form-control" placeholder="C.C" required>
+                        <span class="input-group-addon">¿Día de la semana?</span>
                     </div>
                     <br>
                     <div class="input-group">
-                        <span class="input-group-addon">N° Teléfono</span>
-                        <input type="number" id="telf" maxlength="10" minlength="10" class="form-control" placeholder="Ej: +57 246257" required>
+                        <span class="input-group-addon">¿Día disponible?</span>
+                        <input type="date" id="dia" class="form-control" placeholder="Ej: Domingo" required>
+                    </div>
+                    <div class="input-group hidden">
+                        <input type="text" id="user" value="'.$row['id'].'" class="form-control" required>
                     </div>
                     <br>
-                    <div class="input-group">
-                        <span class="input-group-addon">N° Celular</span>
-                        <input type="number" id="cel" maxlength="10" minlength="10" class="form-control" placeholder="Ej: +57 3001234567" required>
-                    </div>
-                    <br>
-                    <div class="input-group">
-                        <span class="input-group-addon">E-Mail <span class="glyphicon glyphicon-envelope"></span></span>
-                        <input type="email" id="email" maxlength="30" minlength="10" class="form-control" placeholder="Example@ej.com" required>
-                    </div >
-                    <br >
-                    <div class="input-group" >
-                        <label ><input type = "checkbox" id = "tyc" value = "1" checked >Acepto los T & C </label >
-                    </div >
-                    <br >
                     <center >
                         <div class="input-group" >
-                            <button type = "button" onclick = "RegUser()" class="btn btn-default btn-success btn-block" ><span class="glyphicon glyphicon-off" ></span > Registrarme</button >
+                            <button type = "button" onclick="sendDate()" class="btn btn-default btn-success btn-block" >Ok!</button>
+                            <br>
                         </div >
+                        <span id="_AJAX_DATE_"></span>
                     </center >
                 </div >
                 </div>
@@ -407,5 +416,6 @@ session_start();
     <script src="js/slider.js"></script>
     <script src="js/reg.js"></script>
     <script src="js/ing.js"></script>
+    <script src="js/datesupporte.js"></script>
 </body>
 </html>

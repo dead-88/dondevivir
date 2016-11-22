@@ -13,10 +13,16 @@ function RegUser() {
         if(name != '' && cedula != '' && telefono != '' && celular != '' && email != '' && tyc != ''){
             if(pass == r_pass){
                 form = 'name=' + name + '&cedula=' + cedula + '&telf=' + telefono + '&cel=' + celular + '&email=' + email + '&pass=' + pass + '&tyc=' + tyc;
+                // window.XMLHttpRequest esto es un elmento que se utiliza para el control de ajax
+                // ? new XMLHttpRequest() si este elemento existe se crea una nueva instancia
+                // : new ActiveXObject('Microsoft.XMLHTTP') cuando no exista este elemento (XMLHttpRequest()) automaticamente se instancia este
                 connect = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                //onreadystatechang cuando haiga un cambio en la respuesta de php - cuando alla algun cambio hacemos una condicion
                 connect.onreadystatechange = function () {
+                    //readyState verificar si el estado esta listo
                     if(connect.readyState == 4 && connect.status == 200){
-                        if(connect.responseText == 1){
+                        //responseText lo que nos devuelva php va a estar en esta variable - y redirecciona
+                        if(parseInt(connect.responseText) == 1){
                             result = '<div class="alert alert-dismissible alert-success">';
                             result += '<h4>Registro completado.!</h4>';
                             result += '<p><strong>Estamos redireccionantote...</strong></p>';

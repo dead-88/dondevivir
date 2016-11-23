@@ -11,17 +11,20 @@ function acces() {
                 if(connect.responseText == 1){
                     result = '<div class="alert alert-dismissible alert-success">';
                     result += '<h4>Conectado!</h4>';
+                    result += '<p class="pull-right"><img src="img/reload.gif"></p>';
                     result += '<p><strong>Procesando tu sesion...</strong></p>';
                     result += '</div>';
                     document.getElementById('_AJAX_USER_').innerHTML = result;
-                    location.reload();
+                    setTimeout(function () {
+                        location.reload();
+                    },2000)
                 }else{
                     document.getElementById('_AJAX_USER_').innerHTML = connect.responseText;
                 }
             }else if(connect.readyState != 4){
                 result = '<div class="alert alert-dismissible alert-warning">';
                 result += '<button class="close" data-dismiss="alert" type="button">X</button>';
-                result += '<h4>Conectado!</h4>';
+                result += '<h4>Tiempo agotado!</h4>';
                 result += '<p><strong>Wait!</strong> procesando...</p>';
                 result += '</div>';
                 document.getElementById('_AJAX_USER_').innerHTML = result;

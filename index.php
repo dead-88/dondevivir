@@ -3,17 +3,16 @@ require_once 'models/class.conection.php';
 require_once 'models/class.consultations.php';
 session_start();
 
-
 if(!isset($_SESSION['users']))
 {
     echo '<div class="alert alert-dismissible alert-info">
            <button type="button" class="close" data-dismiss="alert">x</button>
-           <strong>Inicia sesión: <a href="https://www.hotmail.com" target="_blank" data-toggle="modal" data-target="#reginm">aquí</a> </strong> para poder publicar inmuebles.
+           <strong>Inicia sesión: <a href="#" target="_blank" data-toggle="modal" data-target="#reginm">aquí</a> </strong> para poder publicar inmuebles.
           </div>';
 }else{
     $modelo = new Conection();
     $connect = $modelo->get_conection();
-    $stm = $connect->prepare("SELECT * FROM usuarios WHERE id = :uid");
+    $stm = $connect->prepare("SELECT * FROM usuarios WHERE id = :uid ");
     $stm->execute(array(":uid"=>$_SESSION['users']));
     $row = $stm->fetch(PDO::FETCH_ASSOC);
 }
@@ -35,6 +34,7 @@ if(!isset($_SESSION['users']))
     <link rel="stylesheet" href="fonts/flaticon.css">
 </head>
 <body>
+<!-- Cabezera-->
     <header>
         <div class="wrapper">
             <a href="index.php">
@@ -75,6 +75,8 @@ if(!isset($_SESSION['users']))
             </div>
         </div>
     </header>
+<!-- Fin Cabezera-->
+
 <!-- Modal Registro-->
 <div id="reg" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -143,6 +145,8 @@ if(!isset($_SESSION['users']))
         </div>
     </div>
 </div>
+<!-- Fin Modeal Registro-->
+
 <!-- Modal Login-->
 <div id="reginm" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -177,7 +181,9 @@ if(!isset($_SESSION['users']))
             </div>
         </div>
     </div>
+<!-- Fin Modal Login-->
 
+<!--    Slider-->
     <section id="slider" class="sect">
         <ul class="slider-wrapper">
             <li class="current-slide">
@@ -216,6 +222,7 @@ if(!isset($_SESSION['users']))
 <!--        Controles de navegación-->
         <ul id="control-buttons" class="control-buttons"></ul>
     </section>
+<!--    Fin Slider-->
 
     <?php
         if(!isset($_SESSION['users'])){
@@ -352,9 +359,20 @@ if(!isset($_SESSION['users']))
     </section>
                 ';
         }else{
+            echo '<section class="wrapper main clearfix">';
             echo '
-                <div class="wrapper container">
-                <h3 class="text-center text-success">Hola '.$row['nombre'].'</h3>
+                <div class="columnRight">
+                    <p style="text-align: center;font-weight: bold;font-size: 16px;">Perfíl</p>
+                    <img style="width:200px;height:150px;" src="img/img.jpg">
+                    <p><strong>Nombre:</strong> '.$row['nombre'].'</p>
+                    <p><strong>Cedula:</strong> '.$row['cedula'].'</p>
+                    <p><strong>Telefono:</strong> '.$row['telefono'].'</p>
+                    <p><strong>Celular:</strong> '.$row['celular'].'</p>
+                    <p><strong>E-Mail:</strong> '.$row['email'].'</p>
+                </div>
+            ';
+            echo '
+                <div class="columnLeft wrapper container">
                 <div role="form" onkeypress="return keyPress(event)">
                 <h2 class="text-center">¿Qué días estás disponible?</h2>
                     <div class="input-group">
@@ -370,7 +388,7 @@ if(!isset($_SESSION['users']))
                     <br>
                     <div class="input-group">
                         <span class="input-group-addon">¿Día disponible?</span>
-                        <input type="date" id="dia" class="form-control" placeholder="Ej: Domingo" required>
+                        <input type="date" id="dia" class="form-control" placeholder="Ej: Lunes, Martes, Miercoles, ,Jueves, Viernes, Sabado,Domingo" required>
                     </div>
                     <div class="input-group hidden">
                         <input type="text" id="user" value="'.$row['id'].'" class="form-control" required>
@@ -384,12 +402,92 @@ if(!isset($_SESSION['users']))
                         <span id="_AJAX_DATE_"></span>
                     </center >
                 </div >
+                <div class="">
+                    <h3 class="text-center">Registar mí inmueble</h3>
+                    <a class="btn btn-danger" style="width: 100%;" data-toggle="modal" data-target="#regInm">Registar</a>
+                    <!-- Modal Registro-->
+<div id="regInm" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Registrate Tú Inmueble.</h4>
+            </div>
+            <div class="modal-body">
+                <p>Registra, Vende & Alquila....</p>
+                <h3 class="text-center">Excelente día '.$row['nombre'].'</h3>
+                <div role="form" class="main" onkeypress="return EnterRunRegInm(event)" enctype="multipart/form-data">
+                    <div class="input-group">
+                        <span class="input-group-addon">Estado de la vivienda:</span>
+                        <input type="text" id="estado" class="form-control" placeholder="Ej: Sobre planos, Obra negra, Con acabados, No construido." required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Tipo de piso:</span>
+                        <input type="text" id="tipo_piso" class="form-control" placeholder="Ej: Tierra, concreto, cerámica, mármol, granito, tableta." required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Área del terreno:</span>
+                        <input type="text" id="ancho_terreno" class="form-control" placeholder="Ej: Ancho en metros." required>
+                        <input type="text" id="largo_terreno" class="form-control" placeholder="Ej: Largo en metros." required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Tipo de pared:</span>
+                        <input type="text" id="tipo_pared" class="form-control" placeholder="Ej: No tiene, Concreto, ladrillo, bloque, otro. " required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Número de pisos:</span>
+                        <input type="text" id="numero_pisos" class="form-control" placeholder="Ej: la cantidad de plantas que tiene la casa ( 2 pisos o 2 plantas)." required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Cantidad de baños:</span>
+                        <input type="text" id="cantidad_bano" class="form-control" placeholder="Ej: la cantidad de baños en el área construida." required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Ubicación:</span>
+                        <input type="text" id="ubicacion" class="form-control" placeholder="Ej: Zona urbana, Zona rural" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Dirección:</span>
+                        <input type="text" id="direccion" class="form-control" placeholder="Ej: la dirección donde está ubicado el inmueble." required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Precio:</span>
+                        <input type="text" id="precio" class="form-control" placeholder="Ej: el precio que pide el usuario por el inmueble" required>
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon">Fotos:</span>
+                        <input type="file" id="fotos" class="form-control" required multiple/>
+                    </div>
+                    <br>
+                        <center><button type="button" class="btn btn-default" onclick="registerInm();">Enviar</button></center>
+                    <span id="_AJAX_INM_"></span>
+                </div >
+            </div >
+            <div class="modal-footer" >
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div >
+        </div >
+    </div >
+</div >
+<!--Fin Modeal Registro-->
+                    <br><br>
+                </div>
                 </div>
             ';
+            echo '</section>';
         }
     ?>
-
-
 
     <footer>
         <div class="wrapper">
@@ -417,5 +515,6 @@ if(!isset($_SESSION['users']))
     <script src="js/reg.js"></script>
     <script src="js/ing.js"></script>
     <script src="js/datesupporte.js"></script>
+    <script src="js/dateinm.js"></script>
 </body>
 </html>

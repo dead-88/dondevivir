@@ -357,6 +357,66 @@ ol, ul{
     color: #ffffff;
 }
 
+#cerrar{
+    position: absolute;
+    z-index: 1000;
+}
+
+.viewPhoto{
+    width: 320px;
+    height: 120px;
+    background-size: cover;
+    cursor: pointer;
+    margin-top: -12px;
+    padding: 0;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+}
+
+.link{
+    width: 300px;
+    height: 120px;
+    background-size: cover;
+    cursor: pointer;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.photoUp{
+    background-image: url("../img/camara-con-perfil-de-la-lente_318-40550.jpg");
+    width: 300px;
+    height: 120px;
+    background-size: cover;
+    margin: 0 auto;
+    position: relative;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.photoUp h3{
+    color: rgb(119, 52, 50);
+}
+
+.photoUp button{
+    padding: 2px 3px;
+    position: absolute;
+    margin-left: 45%;
+    margin-top: 60px;
+    background-color: #761c19;
+    border: none;
+    color: #ffffff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.photoUp button:hover{
+    background-color: #af2a24;
+}
+
 .fotoItem{
     width: 150px;
     float: left;

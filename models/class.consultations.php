@@ -26,10 +26,10 @@
             $stm->bindParam(':hora_fin',$fFin);
             $stm->execute();
         }
-        public function insertInm($usuario,$categoria,$estado,$tipo_piso,$ancho_terreno,$largo_terreno,$tipo_pared,$numero_pisos,$cantidad_baño,$ubicacion,$direccion,$precio){
+        public function insertInm($usuario,$categoria,$estado,$tipo_piso,$ancho_terreno,$largo_terreno,$tipo_pared,$numero_pisos,$cantidad_bano,$ubicacion,$direccion,$precio){
             $modelo = new Conection();
             $connect = $modelo->get_conection();
-            $query = "INSERT INTO inmueble(usuario,categoria,tipo_vivienda,tipo_piso,ancho_terreno,largo_terreno,tipo_pared,numero_plantas,cantidad_baños,ubicacion,direccion,precio) VALUES(:usuario,:categoria,:tipo_vivienda,:tipo_piso,:ancho_terreno,:largo_terreno,:tipo_pared,:numero_plantas,:cantidad_baños,:ubicacion,:direccion,:precio);";
+            $query = "INSERT INTO inmueble(usuario,categoria,tipo_vivienda,tipo_piso,ancho_terreno,largo_terreno,tipo_pared,numero_plantas,cantidad_banos,ubicacion,direccion,precio) VALUES(:usuario,:categoria,:tipo_vivienda,:tipo_piso,:ancho_terreno,:largo_terreno,:tipo_pared,:numero_plantas,:cantidad_banos,:ubicacion,:direccion,:precio);";
             $stm = $connect->prepare($query);
             $stm->bindParam(':usuario',$usuario);
             $stm->bindParam(':categoria',$categoria);
@@ -39,10 +39,20 @@
             $stm->bindParam(':largo_terreno',$largo_terreno);
             $stm->bindParam(':tipo_pared',$tipo_pared);
             $stm->bindParam(':numero_plantas',$numero_pisos);
-            $stm->bindParam(':cantidad_baños',$cantidad_baño);
+            $stm->bindParam(':cantidad_banos',$cantidad_bano);
             $stm->bindParam(':ubicacion',$ubicacion);
             $stm->bindParam(':direccion',$direccion);
             $stm->bindParam(':precio',$precio);
+            $stm->execute();
+        }
+
+        public function insertPhoto($inm,$pho){
+            $modelo = new Conection();
+            $connect = $modelo->get_conection();
+            $query = "INSERT INTO fotos(inmueble,url_foto) VALUE(:inmueble,:url_foto)";
+            $stm = $connect->prepare($query);
+            $stm->bindParam(':inmueble',$inm);
+            $stm->bindParam(':url_foto',$pho);
             $stm->execute();
         }
 

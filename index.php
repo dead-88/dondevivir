@@ -396,7 +396,7 @@ if(!isset($_SESSION['users']))
                     <br>
                     <center >
                         <div class="input-group" >
-                            <button type = "button" onclick="sendDate()" class="btn btn-default btn-success btn-block" >Ok!</button>
+                            <button type="button" onclick="sendDate()" class="btn btn-default btn-success btn-block" >Ok!</button>
                             <br>
                         </div >
                         <span id="_AJAX_DATE_"></span>
@@ -405,6 +405,14 @@ if(!isset($_SESSION['users']))
                 <div class="">
                     <h3 class="text-center">Registar mí inmueble</h3>
                     <a class="btn btn-danger" style="width: 100%;" data-toggle="modal" data-target="#regInm">Registar</a>
+                    <div class="photoUp">
+                        <h3 class="text-center">Foto Del Inmueble:</h3>
+                            <input type="file" id="archivo1" required>
+                            <div id="cerrar"></div>
+                            <button type="button" id="subir">Subir</button>
+                            <div id="BtnphotoUp" class="link"></div>
+                            <div id="mensaje"></div>
+                    </div>
                     <!-- Modal Registro-->
 <div id="regInm" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -418,7 +426,20 @@ if(!isset($_SESSION['users']))
             <div class="modal-body">
                 <p>Registra, Vende & Alquila....</p>
                 <h3 class="text-center">Excelente día '.$row['nombre'].'</h3>
-                <div role="form" class="main" onkeypress="return EnterRunRegInm(event)" enctype="multipart/form-data">
+                <div role="form" class="main" onkeypress="return EnterRunRegInm(event)">
+                    <div class="input-group">
+                        <input type="hidden" id="user" value="'.$_SESSION['users'].'">
+                        <span class="input-group-addon">Categoria:</span>
+                        <select id="select">
+                            <option value="apartamento">Apartamento</option>
+                            <option value="casa">Casa</option>
+                            <option value="habitación">Habitación</option>
+                            <option value="local">Local</option>
+                            <option value="bodega">Bodega</option>
+                            <option value="lote">Lote</option>
+                        </select>
+                    </div>
+                    <br>
                     <div class="input-group">
                         <span class="input-group-addon">Estado de la vivienda:</span>
                         <input type="text" id="estado" class="form-control" placeholder="Ej: Sobre planos, Obra negra, Con acabados, No construido." required>
@@ -442,12 +463,12 @@ if(!isset($_SESSION['users']))
                     <br>
                     <div class="input-group">
                         <span class="input-group-addon">Número de pisos:</span>
-                        <input type="text" id="numero_pisos" class="form-control" placeholder="Ej: la cantidad de plantas que tiene la casa ( 2 pisos o 2 plantas)." required>
+                        <input type="number" id="numero_pisos" class="form-control" placeholder="Ej: la cantidad de plantas que tiene la casa ( 2 pisos o 2 plantas)." required>
                     </div>
                     <br>
                     <div class="input-group">
                         <span class="input-group-addon">Cantidad de baños:</span>
-                        <input type="text" id="cantidad_bano" class="form-control" placeholder="Ej: la cantidad de baños en el área construida." required>
+                        <input type="number" id="cantidad_bano" class="form-control" placeholder="Ej: la cantidad de baños en el área construida." required>
                     </div>
                     <br>
                     <div class="input-group">
@@ -462,12 +483,7 @@ if(!isset($_SESSION['users']))
                     <br>
                     <div class="input-group">
                         <span class="input-group-addon">Precio:</span>
-                        <input type="text" id="precio" class="form-control" placeholder="Ej: el precio que pide el usuario por el inmueble" required>
-                    </div>
-                    <br>
-                    <div class="input-group">
-                        <span class="input-group-addon">Fotos:</span>
-                        <input type="file" id="fotos" class="form-control" required multiple/>
+                        <input type="number" id="precio" class="form-control" placeholder="Ej: el precio que pide el usuario por el inmueble" required>
                     </div>
                     <br>
                         <center><button type="button" class="btn btn-default" onclick="registerInm();">Enviar</button></center>
@@ -485,9 +501,37 @@ if(!isset($_SESSION['users']))
                 </div>
                 </div>
             ';
+
             echo '</section>';
         }
     ?>
+
+<form accept-charset="utf-8" method="POST" id="enviarimagenes" enctype="multipart/form-data" >
+    <input type="file" name="imagen"/>
+    <br><br>
+    <button type="submit">ENVIAR</button>
+</form>
+
+<hr>
+<div id="mensaje"></div>
+<hr>
+
+<?php
+$consulta = "SELECT * FROM fotos";
+$resultado = $connect->query($consulta);
+
+while ($datos = $resultado->fetch(PDO::FETCH_ASSOC)) {
+    ?>
+
+    <div id="resultados">
+        <p><b>Imagen:</b></p>
+        <img src="data:image/jpeg;base64,<?php echo base64_encode($datos['url_foto']); ?>" />
+    </div>
+
+    <hr>
+    <?php
+};
+?>
 
     <footer>
         <div class="wrapper">
@@ -516,5 +560,24 @@ if(!isset($_SESSION['users']))
     <script src="js/ing.js"></script>
     <script src="js/datesupporte.js"></script>
     <script src="js/dateinm.js"></script>
+    <script src="js/upload.js"></script>
+<script>
+    $("#enviarimagenes").on("submit", function(e){
+        e.preventDefault();
+        var formData = new FormData(document.getElementById("enviarimagenes"));
+
+        $.ajax({
+            url: "controllers/upload.php",
+            type: "POST",
+            dataType: "HTML",
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function(echo){
+            $("#mensaje").html(echo);
+        });
+    });
+</script>
 </body>
 </html>

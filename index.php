@@ -1,20 +1,29 @@
 <?php
-require_once 'models/class.conection.php';
-require_once 'models/class.consultations.php';
+    require_once 'models/class.conection.php';
+    require_once 'models/class.consultations.php';
+
 session_start();
 
 if(!isset($_SESSION['users']))
 {
     echo '<div class="alert alert-dismissible alert-info">
            <button type="button" class="close" data-dismiss="alert">x</button>
-           <strong>Inicia sesión: <a href="#" target="_blank" data-toggle="modal" data-target="#reginm">aquí</a> </strong> para poder publicar inmuebles.
+           <strong>Inicia sesión <a href="#" target="_blank" data-toggle="modal" data-target="#reginm">aquí,</a> </strong> para poder publicar inmuebles.
           </div>';
-}else{
+}else {
     $modelo = new Conection();
     $connect = $modelo->get_conection();
-    $stm = $connect->prepare("SELECT * FROM usuarios WHERE id = :uid ");
-    $stm->execute(array(":uid"=>$_SESSION['users']));
+    $stm = $connect->prepare("SELECT * FROM usuarios WHERE id_usuario = :uid ");
+    $stm->execute(array(":uid" => $_SESSION['users']));
     $row = $stm->fetch(PDO::FETCH_ASSOC);
+}
+if(isset($_SESSION['contador']))
+{
+    $_SESSION['contador'] = $_SESSION['contador'] + 1;
+    $mensaje = '<p class="text-success text-center text-capitalize">nos has visitado: ' . $_SESSION['contador'] . ' veces, te aseguro que ecnontraras tu inmueble aquí.</p>';
+}else {
+    $_SESSION['contador'] = 1;
+    $mensaje = '<h4 class="text-center text-capitalize text-success">Bienvenido a nuestra página de inmuebles<h4>';
 }
 
 ?>
@@ -32,10 +41,11 @@ if(!isset($_SESSION['users']))
     <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="css/ei-slider.css">
     <link rel="stylesheet" href="fonts/flaticon.css">
+    <link rel="stylesheet" href="css/font-awesome.css">
 </head>
 <body>
 <!-- Cabezera-->
-    <header>
+<header>
         <div class="wrapper">
             <a href="index.php">
                 <img src="img/img-topic--asset-management-2_560_360_s_c1.png" id="logo" alt="Donde vivir cucúta">
@@ -75,6 +85,7 @@ if(!isset($_SESSION['users']))
             </div>
         </div>
     </header>
+<?php echo '<p class="text-center text-capitalize text-success">'.$mensaje.'</p>'; ?>
 <!-- Fin Cabezera-->
 
 <!-- Modal Registro-->
@@ -181,9 +192,9 @@ if(!isset($_SESSION['users']))
             </div>
         </div>
     </div>
-<!-- Fin Modal Login-->
+<!--Fin Modal Login-->
 
-<!--    Slider-->
+<!--Slider-->
     <section id="slider" class="sect">
         <ul class="slider-wrapper">
             <li class="current-slide">
@@ -215,14 +226,12 @@ if(!isset($_SESSION['users']))
                 </div>
             </li>
         </ul>
-
         <!--Sombras-->
         <div class="slider-shadow"></div>
-
-<!--        Controles de navegación-->
+        <!--Controles de navegación-->
         <ul id="control-buttons" class="control-buttons"></ul>
     </section>
-<!--    Fin Slider-->
+<!--Fin Slider-->
 
     <?php
         if(!isset($_SESSION['users'])){
@@ -360,10 +369,22 @@ if(!isset($_SESSION['users']))
                 ';
         }else{
             echo '<section class="wrapper main clearfix">';
-            echo '
-                <div class="columnRight">
-                    <p style="text-align: center;font-weight: bold;font-size: 16px;">Perfíl</p>
-                    <img style="width:200px;height:150px;" src="img/img.jpg">
+            echo '<div class="columnRight">';
+            echo '<p style="text-align: center;font-weight: bold;font-size: 16px;">.::Mí Perfil::.</p>';
+            echo '<img style="width:200px;height:150px;" src="data:image/*;base64,'.base64_encode($row['foto']).'" class="viewPhoto" />';
+
+            echo '<form accept-charset="utf-8" method="POST" id="enviarimagenes" enctype="multipart/form-data" >
+                        <input type="file" name="imagen" id="file-1" class="inputfile inputfile-1" data-multiple-caption="{count} archivos seleccionados" multiple />
+                        <label for="file-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="iborrainputfile" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"></path></svg>
+                            <span class="iborrainputfile">Seleccionar Foto</span>
+                        </label>
+                        <button type="submit">Enviar</button>
+                  </form>
+                  <hr>
+                      <div id="mensaje"></div>
+                  <hr>';
+             echo '
                     <p><strong>Nombre:</strong> '.$row['nombre'].'</p>
                     <p><strong>Cedula:</strong> '.$row['cedula'].'</p>
                     <p><strong>Telefono:</strong> '.$row['telefono'].'</p>
@@ -391,7 +412,7 @@ if(!isset($_SESSION['users']))
                         <input type="date" id="dia" class="form-control" placeholder="Ej: Lunes, Martes, Miercoles, ,Jueves, Viernes, Sabado,Domingo" required>
                     </div>
                     <div class="input-group hidden">
-                        <input type="text" id="user" value="'.$row['id'].'" class="form-control" required>
+                        <input type="text" id="user" value="'.$row['id_usuario'].'" class="form-control" required>
                     </div>
                     <br>
                     <center >
@@ -413,7 +434,8 @@ if(!isset($_SESSION['users']))
                             <div id="BtnphotoUp" class="link"></div>
                             <div id="mensaje"></div>
                     </div>
-                    <!-- Modal Registro-->
+                    
+<!-- Modal Registro-->
 <div id="regInm" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -497,6 +519,7 @@ if(!isset($_SESSION['users']))
     </div >
 </div >
 <!--Fin Modeal Registro-->
+
                     <br><br>
                 </div>
                 </div>
@@ -506,31 +529,21 @@ if(!isset($_SESSION['users']))
         }
     ?>
 
-<form accept-charset="utf-8" method="POST" id="enviarimagenes" enctype="multipart/form-data" >
-    <input type="file" name="imagen"/>
-    <br><br>
-    <button type="submit">ENVIAR</button>
-</form>
-
-<hr>
-<div id="mensaje"></div>
-<hr>
-
 <?php
-$consulta = "SELECT * FROM fotos";
-$resultado = $connect->query($consulta);
 
-while ($datos = $resultado->fetch(PDO::FETCH_ASSOC)) {
-    ?>
+if(isset($_SESSION['users'])){
 
-    <div id="resultados">
-        <p><b>Imagen:</b></p>
-        <img src="data:image/jpeg;base64,<?php echo base64_encode($datos['url_foto']); ?>" />
-    </div>
+    $consulta = "SELECT * FROM fotos";
+    $resultado = $connect->query($consulta);
 
-    <hr>
-    <?php
-};
+    while ($datos = $resultado->fetch(PDO::FETCH_ASSOC)) {
+
+    echo '<div id="resultados">';
+    echo '<p><b>Imagen:</b></p>';
+    echo '<img src="data:image/*;base64,'.base64_encode($datos['url_foto']).'" class="viewPhoto" />';
+    echo '</div><hr>';
+  }
+}
 ?>
 
     <footer>
@@ -576,6 +589,28 @@ while ($datos = $resultado->fetch(PDO::FETCH_ASSOC)) {
             processData: false
         }).done(function(echo){
             $("#mensaje").html(echo);
+        });
+    });
+</script>
+<script>
+    var inputs = document.querySelectorAll( '.inputfile' );
+    Array.prototype.forEach.call( inputs, function( input )
+    {
+        var label	 = input.nextElementSibling,
+            labelVal = label.innerHTML;
+
+        input.addEventListener( 'change', function( e )
+        {
+            var fileName = '';
+            if( this.files && this.files.length > 1 )
+                fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
+            else
+                fileName = e.target.value.split( '\' ).pop();
+
+            if( fileName )
+                label.querySelector( 'span' ).innerHTML = fileName;
+            else
+                label.innerHTML = labelVal;
         });
     });
 </script>

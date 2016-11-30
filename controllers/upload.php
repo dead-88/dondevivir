@@ -54,56 +54,73 @@
 //
 //chmod($path.$fileName, 0777);
 
+    if($_FILES['imagen']['tmp_name'] != ''){
 
-    //Convertimos la información de la imagen en binario para insertarla en la DB
-    $imagenBinaria = addslashes(file_get_contents($_FILES['imagen']['tmp_name']));
+        //Convertimos la información de la imagen en binario para insertarla en la DB
+        $imagenBinaria = addslashes(file_get_contents($_FILES['imagen']['tmp_name']));
 
-    //Nombre del archivo
-    $nombreArchivo = $_FILES['imagen']['name'];
+        //Nombre del archivo
+        $nombreArchivo = $_FILES['imagen']['name'];
 
-    //Extensiones permitidas
-    $extensiones = array('jpg', 'jpeg', 'gif', 'png', 'bmp');
+        //Extensiones permitidas
+        $extensiones = array('jpg', 'jpeg', 'gif', 'png', 'bmp');
 
-    //Obtenemos la extensión (en minúsculas) para poder comparar
-    $extension = strtolower(end(explode('.', $nombreArchivo)));
+        //Obtenemos la extensión (en minúsculas) para poder comparar
+        $extension = strtolower(end(explode('.', $nombreArchivo)));
 
-    //Verificamos que sea una extensión permitida, si no lo es mostramos un mensaje de error
-    if(!in_array($extension, $extensiones)) {
-        die( 'Sólo se permiten archivos con las siguientes extensiones: '.implode(', ', $extensiones) );
-    }else{
-        //Si la extensión es correcta, procedemos a comprobar el tamaño del archivo subido
-        //Y definimos el máximo que se puede subir
-        //Por defecto el máximo es de 2 MB, pero se puede aumentar desde el .htaccess o en la directiva 'upload_max_filesize' en el php.ini
-
-        $tamañoArchivo = $_FILES['imagen']['size']; //Obtenemos el tamaño del archivo en Bytes
-        $tamañoArchivoKB = round(intval(strval( $tamañoArchivo / 1024 ))); //Pasamos el tamaño del archivo a KB
-
-        $tamañoMaximoKB = "2048"; //Tamaño máximo expresado en KB
-        $tamañoMaximoBytes = $tamañoMaximoKB * 1024; // -> 2097152 Bytes -> 2 MB
-
-        //Comprobamos el tamaño del archivo, y mostramos un mensaje si es mayor al tamaño expresado en Bytes
-        if($tamañoArchivo > $tamañoMaximoBytes) {
-            die( "El archivo ".$nombreArchivo." es demasiado grande. El tamaño máximo del archivo es de ".$tamañoMaximoKB."Kb." );
+        //Verificamos que sea una extensión permitida, si no lo es mostramos un mensaje de error
+        if(!in_array($extension, $extensiones)) {
+            die( 'Sólo se permiten archivos con las siguientes extensiones: '.implode(', ', $extensiones) );
         }else{
-            //Si el tamaño es correcto, subimos los datos
-            $modelo = new Conection();
-            $connect = $modelo->get_conection();
-            $consulta = "INSERT INTO fotos(url_foto) VALUES ('$imagenBinaria')";
-            $stm = $connect->prepare($consulta);
-            $stm->execute();
+            //Si la extensión es correcta, procedemos a comprobar el tamaño del archivo subido
+            //Y definimos el máximo que se puede subir
+            //Por defecto el máximo es de 2 MB, pero se puede aumentar desde el .htaccess o en la directiva 'upload_max_filesize' en el php.ini
 
-            //Hacemos la inserción, y si es correcta, se procede
-            if($stm) {
-                //Reiniciamos los inputs
-                echo '<script>$("#enviarimagenes input,textarea").each(function(index) {
+            $tamañoArchivo = $_FILES['imagen']['size']; //Obtenemos el tamaño del archivo en Bytes
+            $tamañoArchivoKB = round(intval(strval( $tamañoArchivo / 1024 ))); //Pasamos el tamaño del archivo a KB
+
+            $tamañoMaximoKB = "5120"; //Tamaño máximo expresado en KB
+            $tamañoMaximoBytes = $tamañoMaximoKB * 1024; // -> 5242880 Bytes -> 5 MB
+
+            //Comprobamos el tamaño del archivo, y mostramos un mensaje si es mayor al tamaño expresado en Bytes
+            if($tamañoArchivo > $tamañoMaximoBytes) {
+                die( "El archivo ".$nombreArchivo." es demasiado grande. El tamaño máximo del archivo es de ".$tamañoMaximoKB."Kb." );
+            }else{
+                //Si el tamaño es correcto, subimos los datos
+                session_start();
+                $user = $_SESSION['users'];
+                $modelo = new Conection();
+                $connect = $modelo->get_conection();
+                $consulta = "UPDATE usuarios SET foto = '$imagenBinaria' WHERE id_usuario = '$user'";
+                $stm = $connect->prepare($consulta);
+                $stm->execute();
+
+                //Hacemos la inserción, y si es correcta, se procede
+                if($stm) {
+                    //Reiniciamos los inputs
+                    echo '<script>$("#enviarimagenes input,textarea").each(function(index) {
                             $(this).val("");
                         });
                       </script>';
-                //Mostramos un mensaje
-                die( "El archivo con el nombre ".$nombreArchivo." fue subido. Su peso es de ".$tamañoArchivoKB." KB." );
-            } else {
-                //Si hay algún error con la inserción, se muestra un mensaje
-                die( "Parece que ha habido un error. Recargue la página e inténtelo nuevamente." );
+                    //Mostramos un mensaje
+                    die( "<div class='alert alert-dismissible alert-success'>
+                            <button type='button' class='close' data-dismiss='alert'>x</button>
+                            <p>El archivo con el nombre <strong>".$nombreArchivo."</strong> fue subido. Su peso es de <strong>".$tamañoArchivoKB."</strong> KB.</p>
+                          </div>
+                          <script>location.reload()</script>" );
+                } else {
+                    //Si hay algún error con la inserción, se muestra un mensaje
+                    die( "<div class='alert alert-dismissible alert-danger'>
+                            <button type='button' class='close' data-dismiss='alert'>x</button>
+                            <p>Parece que ha habido un error. Recargue la página e inténtelo nuevamente.</p>
+                          </div>
+                    " );
+                }
             }
         }
+    }else{
+        echo '<div class="alert alert-dismissible alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">x</button>
+                    <p><strong>ERROR!</strong> debes seleccionar una imagen.</p>
+                  </div>';
     }

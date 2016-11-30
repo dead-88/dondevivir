@@ -17,7 +17,7 @@
         $count = $stm->rowCount();
         if($row['pass'] == $password){
             echo 1; //login
-            $_SESSION['users'] = $row['id'];
+            $_SESSION['users'] = $row['id_usuario'];
         }else{
             echo '<div class="alert alert-dismissible alert-danger">
                     <button type="button" class="close" data-dismiss="alert">x</button>

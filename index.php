@@ -369,7 +369,7 @@ if(isset($_SESSION['contador']))
                 ';
         }else{
             echo '<section class="wrapper main clearfix">';
-            echo '<div class="columnRight">';
+            echo '<div class="columnRight text-capitalize">';
             echo '<p style="text-align: center;font-weight: bold;font-size: 16px;">.::Mí Perfil::.</p>';
             echo '<img style="width:200px;height:150px;" src="data:image/*;base64,'.base64_encode($row['foto']).'" class="viewPhoto" />';
 
@@ -380,18 +380,17 @@ if(isset($_SESSION['contador']))
                             <span class="iborrainputfile">Seleccionar Foto</span>
                         </label>
                         <button type="submit">Enviar</button>
-                  </form>
-                  <hr>
-                      <div id="mensaje"></div>
-                  <hr>';
+                  </form>';
              echo '
                     <p><strong>Nombre:</strong> '.$row['nombre'].'</p>
                     <p><strong>Cedula:</strong> '.$row['cedula'].'</p>
-                    <p><strong>Telefono:</strong> '.$row['telefono'].'</p>
+                    <p><strong>Telefono:</strong> +57 '.$row['telefono'].'</p>
                     <p><strong>Celular:</strong> '.$row['celular'].'</p>
                     <p><strong>E-Mail:</strong> '.$row['email'].'</p>
-                </div>
-            ';
+                <hr>
+                   <div id="mensaje"></div>
+                <hr>
+                </div>';
             echo '
                 <div class="columnLeft wrapper container">
                 <div role="form" onkeypress="return keyPress(event)">
@@ -426,14 +425,6 @@ if(isset($_SESSION['contador']))
                 <div class="">
                     <h3 class="text-center">Registar mí inmueble</h3>
                     <a class="btn btn-danger" style="width: 100%;" data-toggle="modal" data-target="#regInm">Registar</a>
-                    <div class="photoUp">
-                        <h3 class="text-center">Foto Del Inmueble:</h3>
-                            <input type="file" id="archivo1" required>
-                            <div id="cerrar"></div>
-                            <button type="button" id="subir">Subir</button>
-                            <div id="BtnphotoUp" class="link"></div>
-                            <div id="mensaje"></div>
-                    </div>
                     
 <!-- Modal Registro-->
 <div id="regInm" class="modal fade" role="dialog">
@@ -508,13 +499,15 @@ if(isset($_SESSION['contador']))
                         <input type="number" id="precio" class="form-control" placeholder="Ej: el precio que pide el usuario por el inmueble" required>
                     </div>
                     <br>
-                        <center><button type="button" class="btn btn-default" onclick="registerInm();">Enviar</button></center>
+                    <br>
+                    <br>
+                        <center><button type="button" class="btn btn-default" id="subir" onclick="registerInm();">Enviar</button></center>
                     <span id="_AJAX_INM_"></span>
                 </div >
             </div >
             <div class="modal-footer" >
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div >
+            </div>
         </div >
     </div >
 </div >
@@ -522,6 +515,71 @@ if(isset($_SESSION['contador']))
 
                     <br><br>
                 </div>
+                    <form class="content" id="formularioPhoto">
+                        <h3 class="text-center">Fotos Del Inmueble:</h3>
+                        <ul class="photos">
+                            <li>
+                                <input type="file" id="archivo1" name="file[]" required>
+                                <div id="photo-1" class="link"></div>
+                                <div id="cerrar-photo-1" class="cerrar-photo"></div>
+                            </li>
+                            <li>
+                                <input type="file" id="archivo2" name="file[]" required>
+                                <div id="photo-2" class="link"></div>
+                                <div id="cerrar-photo-2" class="cerrar-photo"></div>
+                            </li>
+                            <li>
+                                <input type="file" id="archivo3" name="file[]" required>
+                                <div id="photo-3" class="link"></div>
+                                <div id="cerrar-photo-3" class="cerrar-photo"></div>
+                            </li>
+                            <li>
+                                <input type="file" id="archivo4" name="file[]" required>
+                                <div id="photo-4" class="link"></div>
+                                <div id="cerrar-photo-4" class="cerrar-photo"></div>
+                            </li>
+                            <li>
+                                <input type="file" id="archivo5" name="file[]" required>
+                                <div id="photo-5" class="link"></div>
+                                <div id="cerrar-photo-5" class="cerrar-photo"></div>
+                            </li>
+                            <li>
+                                <input type="file" id="archivo6" name="file[]" required>
+                                <div id="photo-6" class="link"></div>
+                                <div id="cerrar-photo-6" class="cerrar-photo"></div>
+                            </li>
+                            <li>
+                                <input type="file" id="archivo7" name="file[]" required>
+                                <div id="photo-7" class="link"></div>
+                                <div id="cerrar-photo-7" class="cerrar-photo"></div>
+                            </li>
+                            <li>
+                                <input type="file" id="archivo8" name="file[]" required>
+                                <div id="photo-8" class="link"></div>
+                                <div id="cerrar-photo-8" class="cerrar-photo"></div>
+                            </li>
+                            <li>
+                                <input type="file" id="archivo9" name="file[]" required>
+                                <div id="photo-9" class="link"></div>
+                                <div id="cerrar-photo-9" class="cerrar-photo"></div>
+                            </li>
+                            <li>
+                                <input type="file" id="archivo10" name="file[]" required>
+                                <div id="photo-10" class="link"></div>
+                                <div id="cerrar-photo-10" class="cerrar-photo"></div>
+                            </li>
+                              <!--BARRA DE PROGRESO-->
+                                <center>
+                                    <div class="progress">
+                                        <div class="bar"></div >
+                                        <div class="percent">0%</div >
+                                    </div>
+                                </center>
+                             <!--FIN BARRA DE PROGRESO-->
+                             <div class="msj"></div>
+                                <div id="resultado"></div>
+                        </ul>
+                    </form>
                 </div>
             ';
 
@@ -569,6 +627,7 @@ if(isset($_SESSION['users'])){
 <script src="js/jquery-1.12.4.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/slider.js"></script>
+    <script src="js/jquery.form.js"></script>
     <script src="js/reg.js"></script>
     <script src="js/ing.js"></script>
     <script src="js/datesupporte.js"></script>

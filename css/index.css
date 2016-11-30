@@ -220,7 +220,7 @@ ol, ul{
     position: absolute;
     bottom: 0;
     left: 0;
-    background: rgba(0,0,0,0.65);
+    background: rgba(0, 0, 0, 0.93);
     width: 100%;
     padding: 10px;
     color: #ffffff;
@@ -434,9 +434,36 @@ ol, ul{
 
 /*FIN ESTILO BOTON UPLOAD*/
 
-#cerrar{
+.content h3{text-align: center;}
+
+.photos{
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.photos li{
+    width: 120px;
+    height: 120px;
+    background: rgb(255, 255, 255) url("../img/camara-con-perfil-de-la-lente_318-40550.jpg");
+    background-size: cover;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #060606;
+    vertical-align: middle;
+    position: relative;
+    display: inline-block;
+}
+
+.cerrar-photo{
+    width: 19px;
+    height: 19px;
     position: absolute;
-    z-index: 1000;
+    top: 0;
+    left: 100px;
 }
 
 .viewPhoto{
@@ -452,46 +479,10 @@ ol, ul{
 }
 
 .link{
-    width: 300px;
+    display: block;
+    width: 120px;
     height: 120px;
-    background-size: cover;
-    cursor: pointer;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-}
-
-.photoUp{
-    background-image: url("../img/camara-con-perfil-de-la-lente_318-40550.jpg");
-    width: 300px;
-    height: 120px;
-    background-size: cover;
-    margin: 0 auto;
-    position: relative;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-}
-
-.photoUp h3{
-    color: rgb(119, 52, 50);
-}
-
-.photoUp button{
-    padding: 2px 3px;
-    position: absolute;
-    margin-left: 45%;
-    margin-top: 60px;
-    background-color: #761c19;
-    border: none;
-    color: #ffffff;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-}
-
-.photoUp button:hover{
-    background-color: #af2a24;
+    vertical-align: middle;
 }
 
 .fotoItem{
@@ -517,6 +508,15 @@ ol, ul{
 
 
 /*FIN IMAGENES*/
+
+/*BARRA PROGRESO*/
+
+
+.progress { position:relative; width:400px; border: 1px solid #ddd; padding: 1px; border-radius: 3px; }
+.bar { background-color: #B4F5B4; width:0%; height:20px; border-radius: 3px; }
+.percent { position:absolute; display:inline-block; top:3px; left:48%; }
+
+/*FIN BARRA PROGRESO*/
 
 .DetallesItem{
     float: right;

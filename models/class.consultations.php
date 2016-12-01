@@ -46,16 +46,6 @@
             $stm->execute();
         }
 
-        public function insertPhoto($inm,$pho){
-            $modelo = new Conection();
-            $connect = $modelo->get_conection();
-            $query = "INSERT INTO fotos(inmueble,url_foto) VALUE(:inmueble,:url_foto)";
-            $stm = $connect->prepare($query);
-            $stm->bindParam(':inmueble',$inm);
-            $stm->bindParam(':url_foto',$pho);
-            $stm->execute();
-        }
-
         public function viewUsers(){
             $rows = null;
             $modelo = new Conection();

@@ -467,15 +467,15 @@ ol, ul{
 }
 
 .viewPhoto{
-    width: 320px;
+    width: 120px;
     height: 120px;
     background-size: cover;
     cursor: pointer;
     margin-top: -12px;
     padding: 0;
-    -webkit-border-radius: 50px;
-    -moz-border-radius: 50px;
-    border-radius: 50px;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
 }
 
 .link{
@@ -512,9 +512,31 @@ ol, ul{
 /*BARRA PROGRESO*/
 
 
-.progress { position:relative; width:400px; border: 1px solid #ddd; padding: 1px; border-radius: 3px; }
-.bar { background-color: #B4F5B4; width:0%; height:20px; border-radius: 3px; }
-.percent { position:absolute; display:inline-block; top:3px; left:48%; }
+.progress {
+    position:relative;
+    width:400px; border: 1px solid #ddd;
+    padding: 1px; border-radius: 3px;
+}
+
+.bar {
+
+    background: rgba(235,233,249,1);
+    background: -moz-linear-gradient(left, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
+    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(235,233,249,1)), color-stop(50%, rgba(216,208,239,1)), color-stop(51%, rgba(206,199,236,1)), color-stop(100%, rgba(193,191,234,1)));
+    background: -webkit-linear-gradient(left, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
+    background: -o-linear-gradient(left, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
+    background: -ms-linear-gradient(left, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
+    background: linear-gradient(to right, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebe9f9', endColorstr='#c1bfea', GradientType=1 );
+    width:0%; height:20px;
+    border-radius: 3px;
+}
+
+.percent {
+    position:absolute;
+    display:inline-block;
+    top:3px; left:48%;
+}
 
 /*FIN BARRA PROGRESO*/
 

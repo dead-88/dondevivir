@@ -235,141 +235,69 @@ if(isset($_SESSION['contador']))
 
     <?php
         if(!isset($_SESSION['users'])){
+            echo '<section class="wrapper main clearfix">';
+            echo '<div class="columnRight">
+                    <a href="#" target="_blank">
+                        <img src="http://homelos.com/wp-content/uploads/2016/08/modest-for-bathroom-design-trends-in-style-and-hd-image-v1fl.jpg" alt="Read error">
+                    </a>
+                 </div>';
+
             echo '
-                <section class="wrapper main clearfix">
-        <div class="columnRight">
-            <a href="#" target="_blank">
-                <img src="http://homelos.com/wp-content/uploads/2016/08/modest-for-bathroom-design-trends-in-style-and-hd-image-v1fl.jpg" alt="Read error">
-            </a>
-        </div>
         <div class="columnLeft">
             <div class="selector">
                 <a href="" class="btn" id="btnVenta">PROPIEDAD EN VENTA</a>
                 <a href="" class="btn" id="btnRenta">PROPIEDADES EN RENTA</a>
                 <div class="clearfix"></div>
                 <div class="venta">
-                    <div class="Items">
-                        <div class="first">
-                            <table class="tableItems">
-                                <tbody>
-                                    <tr>
-                                        <td colspan="2">
-                                            <div class="fotoItem">
-                                                <a href="#">
-                                                    <img src="img/Slide_01.jpg" alt="Read error">
-                                                </a>
-                                            </div>
-                                            <div class="DetallesItem">
-                                                <a href="#">
-                                                    <p>Casa venta</p>
-                                                    <table>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td>Contrucción: 52 m°</td>
-                                                            <td>Baños: 3</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="first">
-                            <table class="tableItems">
-                                <tbody>
-                                <tr>
-                                    <td colspan="2">
-                                        <div class="fotoItem">
-                                            <a href="#">
-                                                <img src="img/Slide_01.jpg" alt="Read error">
-                                            </a>
-                                        </div>
-                                        <div class="DetallesItem">
-                                            <a href="#">
-                                                <p>Casa venta</p>
-                                                <table>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>Contrucción: 52 m°</td>
-                                                        <td>Baños: 3</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="first">
-                            <table class="tableItems">
-                                <tbody>
-                                <tr>
-                                    <td colspan="2">
-                                        <div class="fotoItem">
-                                            <a href="#">
-                                                <img src="img/Slide_01.jpg" alt="Read error">
-                                            </a>
-                                        </div>
-                                        <div class="DetallesItem">
-                                            <a href="#">
-                                                <p>Casa venta</p>
-                                                <table>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>Contrucción: 52 m°</td>
-                                                        <td>Baños: 3</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="first">
-                            <table class="tableItems">
-                                <tbody>
-                                <tr>
-                                    <td colspan="2">
-                                        <div class="fotoItem">
-                                            <a href="#">
-                                                <img src="img/Slide_01.jpg" alt="Read error">
-                                            </a>
-                                        </div>
-                                        <div class="DetallesItem">
-                                            <a href="#">
-                                                <p>Casa venta</p>
-                                                <table>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td>Contrucción: 52 m°</td>
-                                                        <td>Baños: 3</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <div class="Items">';
+
+            // Seleccioan total de la tabla fotos
+            $modelos = new Conection();
+            $connection = $modelos->get_conection();
+            $consulta = "SELECT * FROM fotos";
+            $resultado = $connection->query($consulta);
+
+            if(isset($resultado)){
+                while ($datos = $resultado->fetch(PDO::FETCH_ASSOC)) {
+
+                    echo '<div class="first">';
+                    echo '<table class="tableItems">';
+                    echo '<tbody>
+                        <tr>
+                            <td colspan="2">
+                                <div class="fotoItem">
+                                    <a href="#">
+                                        <img src="data:image/*;base64,'.base64_encode($datos['foto']).'" class="viewPhoto" alt="Error"/>
+                                    </a>
+                                </div>
+                                <div class="DetallesItem">
+                                    <a href="#">
+                                        <p>Casa venta</p>
+                                        <table>
+                                            <tbody>
+                                            <tr>
+                                                <td>Contrucción: 52 m°</td>
+                                                <td>Baños: 3</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                      </tbody>';
+                    echo '</table>';
+                    echo '</div><hr>';
+                }
+            }
+            echo '</div>
                 </div>
             </div>
         </div>
-    </section>
-                ';
+    </section>';
         }else{
             echo '<section class="wrapper main clearfix">';
-            echo '<div class="columnRight text-capitalize">';
+            echo '<div class="columnRight">';
             echo '<p style="text-align: center;font-weight: bold;font-size: 16px;">.::Mí Perfil::.</p>';
             echo '<img style="width:200px;height:150px;" src="data:image/*;base64,'.base64_encode($row['foto']).'" class="viewPhoto" />';
 
@@ -382,7 +310,7 @@ if(isset($_SESSION['contador']))
                         <button type="submit">Enviar</button>
                   </form>';
              echo '
-                    <p><strong>Nombre:</strong> '.$row['nombre'].'</p>
+                    <p class="text-capitalize"><strong>Nombre:</strong> '.$row['nombre'].'</p>
                     <p><strong>Cedula:</strong> '.$row['cedula'].'</p>
                     <p><strong>Telefono:</strong> +57 '.$row['telefono'].'</p>
                     <p><strong>Celular:</strong> '.$row['celular'].'</p>
@@ -515,69 +443,28 @@ if(isset($_SESSION['contador']))
 
                     <br><br>
                 </div>
-                    <form class="content" id="formularioPhoto">
+                    <form action="controllers/uploadPhoto.php" method="post" enctype="multipart/form-data" class="content" id="formularioPhoto">
                         <h3 class="text-center">Fotos Del Inmueble:</h3>
                         <ul class="photos">
+                        <center>
                             <li>
                                 <input type="file" id="archivo1" name="file[]" required>
                                 <div id="photo-1" class="link"></div>
                                 <div id="cerrar-photo-1" class="cerrar-photo"></div>
                             </li>
-                            <li>
-                                <input type="file" id="archivo2" name="file[]" required>
-                                <div id="photo-2" class="link"></div>
-                                <div id="cerrar-photo-2" class="cerrar-photo"></div>
-                            </li>
-                            <li>
-                                <input type="file" id="archivo3" name="file[]" required>
-                                <div id="photo-3" class="link"></div>
-                                <div id="cerrar-photo-3" class="cerrar-photo"></div>
-                            </li>
-                            <li>
-                                <input type="file" id="archivo4" name="file[]" required>
-                                <div id="photo-4" class="link"></div>
-                                <div id="cerrar-photo-4" class="cerrar-photo"></div>
-                            </li>
-                            <li>
-                                <input type="file" id="archivo5" name="file[]" required>
-                                <div id="photo-5" class="link"></div>
-                                <div id="cerrar-photo-5" class="cerrar-photo"></div>
-                            </li>
-                            <li>
-                                <input type="file" id="archivo6" name="file[]" required>
-                                <div id="photo-6" class="link"></div>
-                                <div id="cerrar-photo-6" class="cerrar-photo"></div>
-                            </li>
-                            <li>
-                                <input type="file" id="archivo7" name="file[]" required>
-                                <div id="photo-7" class="link"></div>
-                                <div id="cerrar-photo-7" class="cerrar-photo"></div>
-                            </li>
-                            <li>
-                                <input type="file" id="archivo8" name="file[]" required>
-                                <div id="photo-8" class="link"></div>
-                                <div id="cerrar-photo-8" class="cerrar-photo"></div>
-                            </li>
-                            <li>
-                                <input type="file" id="archivo9" name="file[]" required>
-                                <div id="photo-9" class="link"></div>
-                                <div id="cerrar-photo-9" class="cerrar-photo"></div>
-                            </li>
-                            <li>
-                                <input type="file" id="archivo10" name="file[]" required>
-                                <div id="photo-10" class="link"></div>
-                                <div id="cerrar-photo-10" class="cerrar-photo"></div>
-                            </li>
+                            <div class="boton">
+                            <input type="hidden" id="subir" name="subir" value="Subir">
+                                <input type="submit" id="uploadbtn" class="uploadbtn" value="Subir imagen">
+                            </div>
                               <!--BARRA DE PROGRESO-->
-                                <center>
                                     <div class="progress">
                                         <div class="bar"></div >
-                                        <div class="percent">0%</div >
+                                        <div class="percent">0%</div>
                                     </div>
-                                </center>
                              <!--FIN BARRA DE PROGRESO-->
                              <div class="msj"></div>
                                 <div id="resultado"></div>
+                        </center>
                         </ul>
                     </form>
                 </div>
@@ -586,23 +473,51 @@ if(isset($_SESSION['contador']))
             echo '</section>';
         }
     ?>
-
-<?php
-
-if(isset($_SESSION['users'])){
-
-    $consulta = "SELECT * FROM fotos";
-    $resultado = $connect->query($consulta);
-
-    while ($datos = $resultado->fetch(PDO::FETCH_ASSOC)) {
-
-    echo '<div id="resultados">';
-    echo '<p><b>Imagen:</b></p>';
-    echo '<img src="data:image/*;base64,'.base64_encode($datos['url_foto']).'" class="viewPhoto" />';
-    echo '</div><hr>';
-  }
-}
-?>
+<!--<li>-->
+<!--    <input type="file" id="archivo2" name="file[]" required>-->
+<!--    <div id="photo-2" class="link"></div>-->
+<!--    <div id="cerrar-photo-2" class="cerrar-photo"></div>-->
+<!--</li>-->
+<!--<li>-->
+<!--    <input type="file" id="archivo3" name="file[]" required>-->
+<!--    <div id="photo-3" class="link"></div>-->
+<!--    <div id="cerrar-photo-3" class="cerrar-photo"></div>-->
+<!--</li>-->
+<!--<li>-->
+<!--    <input type="file" id="archivo4" name="file[]" required>-->
+<!--    <div id="photo-4" class="link"></div>-->
+<!--    <div id="cerrar-photo-4" class="cerrar-photo"></div>-->
+<!--</li>-->
+<!--<li>-->
+<!--    <input type="file" id="archivo5" name="file[]" required>-->
+<!--    <div id="photo-5" class="link"></div>-->
+<!--    <div id="cerrar-photo-5" class="cerrar-photo"></div>-->
+<!--</li>-->
+<!--<li>-->
+<!--    <input type="file" id="archivo6" name="file[]" required>-->
+<!--    <div id="photo-6" class="link"></div>-->
+<!--    <div id="cerrar-photo-6" class="cerrar-photo"></div>-->
+<!--</li>-->
+<!--<li>-->
+<!--    <input type="file" id="archivo7" name="file[]" required>-->
+<!--    <div id="photo-7" class="link"></div>-->
+<!--    <div id="cerrar-photo-7" class="cerrar-photo"></div>-->
+<!--</li>-->
+<!--<li>-->
+<!--    <input type="file" id="archivo8" name="file[]" required>-->
+<!--    <div id="photo-8" class="link"></div>-->
+<!--    <div id="cerrar-photo-8" class="cerrar-photo"></div>-->
+<!--</li>-->
+<!--<li>-->
+<!--    <input type="file" id="archivo9" name="file[]" required>-->
+<!--    <div id="photo-9" class="link"></div>-->
+<!--    <div id="cerrar-photo-9" class="cerrar-photo"></div>-->
+<!--</li>-->
+<!--<li>-->
+<!--    <input type="file" id="archivo10" name="file[]" required>-->
+<!--    <div id="photo-10" class="link"></div>-->
+<!--    <div id="cerrar-photo-10" class="cerrar-photo"></div>-->
+<!--</li>-->
 
     <footer>
         <div class="wrapper">
@@ -648,28 +563,6 @@ if(isset($_SESSION['users'])){
             processData: false
         }).done(function(echo){
             $("#mensaje").html(echo);
-        });
-    });
-</script>
-<script>
-    var inputs = document.querySelectorAll( '.inputfile' );
-    Array.prototype.forEach.call( inputs, function( input )
-    {
-        var label	 = input.nextElementSibling,
-            labelVal = label.innerHTML;
-
-        input.addEventListener( 'change', function( e )
-        {
-            var fileName = '';
-            if( this.files && this.files.length > 1 )
-                fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
-            else
-                fileName = e.target.value.split( '\' ).pop();
-
-            if( fileName )
-                label.querySelector( 'span' ).innerHTML = fileName;
-            else
-                label.innerHTML = labelVal;
         });
     });
 </script>
